@@ -170,6 +170,11 @@ table.services td:first-child { font-weight: 600; white-space: nowrap; }
 
 details { margin: 10px 0; }
 details summary { cursor: pointer; font-weight: 600; }
+.faq { margin: 0; }
+.faq dt { font-weight: 600; margin-top: 14px; }
+.faq dt:first-child { margin-top: 0; }
+.faq dd { margin: 4px 0 0; font-size: .93rem; }
+.faq .more { display: block; margin-top: 3px; font-size: .82rem; color: var(--muted); }
 .sources { font-size: .88rem; }
 .sources li { margin: 4px 0; }
 
