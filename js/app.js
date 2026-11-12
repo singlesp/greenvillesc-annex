@@ -85,6 +85,7 @@
       vehiclesValue: n('vehicles'), bppValue: n('bpp'),
       waterProvider: $('water-provider').value, meter: meter, kgal: kgal, sewer: $('sewer').value,
       trashNow: $('trash-now').value, trashMonthly: n('trash-monthly'), trashAfterMonthly: n('trash-after'),
+      recyclingMonthly: n('recycling-monthly'),
       stormCountyLarge: $('storm-county-large').checked, stormCityLarge: $('storm-city-large').checked,
       imperviousSqFt: n('impervious'),
       electricMonthly: n('electric'), gasMonthly: n('gas'), insuranceAnnual: n('insurance'),

@@ -141,7 +141,7 @@
     services: [
       { topic: 'Police', now: 'Greenville County Sheriff’s Office', after: 'Greenville Police Department' },
       { topic: 'Fire', now: 'Your fire district (paid through its own millage)', after: 'Greenville City Fire Department, ISO Class 1 (paid from city millage)' },
-      { topic: 'Trash', now: 'Greater Greenville Sanitation if you are in its district (garbage, bulk and yard waste; no curbside recycling); otherwise a private hauler or the county\u2019s free drop-off centers', after: 'City weekly garbage, curbside recycling, yard waste and bulk pickup for houses, duplexes and triplexes. The city does not collect from businesses or larger apartment buildings' },
+      { topic: 'Trash', now: 'Greater Greenville Sanitation if you are in its district (garbage, bulk and yard waste; no curbside recycling); otherwise a private hauler or the county\u2019s free drop-off centers. Curbside recycling is only available by paying a private service', after: 'City weekly garbage, curbside recycling, yard waste and bulk pickup for houses, duplexes and triplexes. The city does not collect from businesses or larger apartment buildings' },
       { topic: 'Water', now: 'Greenville Water at outside-city rates', after: 'Greenville Water at inside-city rates' },
       { topic: 'Sewer', now: 'MetroConnects collection, ReWa treatment', after: 'No change: the city says MetroConnects and ReWa rates stay the same' },
       { topic: 'Zoning and permits', now: 'Greenville County zoning (or unzoned) and county permitting', after: 'City zoning, development code and permitting' },
