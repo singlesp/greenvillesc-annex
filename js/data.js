@@ -25,6 +25,8 @@
     salesTax: { label: 'Greenville Journal: city sales tax approved, county referendum fails (Nov 2026)', url: 'https://greenvillejournal.com/government/penny-tax-for-greenville-county-roads-four-cities-approve-measure-but-countys-referendum-fails/' },
     scAnnexLaw: { label: 'SC Code Title 5, Chapter 3 (annexation)', url: 'https://www.scstatehouse.gov/code/t05c003.php' },
     gis: { label: 'Greenville County GIS (parcel and district lookup)', url: 'https://www.gcgis.org/' },
+    reassess: { label: 'Greenville County Real Property Services, countywide reassessment and the 15% cap', url: 'https://www.greenvillecounty.org/realproperty/PDF/Reasssessment.pdf' },
+    scValueLaw: { label: 'SC Code Title 12, Chapter 37, Article 25 (when property is revalued)', url: 'https://www.scstatehouse.gov/code/t12c037.php' },
     fire: { label: 'City of Greenville Fire Department', url: 'https://www.greenvillesc.gov/fire-department-0' },
   };
 
@@ -156,6 +158,31 @@
   DATA.servicesNotes = [
     'The City of Greenville Fire Department holds the top insurance rating (ISO Class 1). Some neighboring districts are also highly rated, so ask your insurer whether your premium would change.',
     'The city can annex by petition of 100% of owners, by petition of 75% of owners holding 75% of assessed value (owners inside the area who did not sign are still annexed), or by a petition of 25% of voters followed by an election.',
+  ];
+
+  // Short answers to common assumptions. "links" are keys in SRC.
+  DATA.faq = [
+    { q: 'Does annexation trigger a reassessment of my property?',
+      a: 'No. The county Assessor sets your value, not the city, and state law only resets it when the property is sold or transferred, when you add improvements, or at the countywide reassessment every five years (last done in 2025, next due in 2030; increases are capped at 15%). Annexation changes the millage applied to your value, not the value.',
+      links: ['reassess', 'scValueLaw'] },
+    { q: 'Is the city tax added on top of everything I pay now?',
+      a: 'No. City millage is added, but your fire district levy and any Greater Greenville Sanitation or special district levies normally come off. County and school taxes stay the same. The estimate above shows the net effect for your tax district.',
+      links: ['millage'] },
+    { q: 'Do I keep the 4% owner-occupied rate and the homestead exemption?',
+      a: 'Yes. Both are set by state law and handled by the county, and they apply to city taxes too. Owner-occupied homes also stay exempt from school operating taxes.',
+      links: ['assessorFaq'] },
+    { q: 'Can my property be annexed if I do not agree?',
+      a: 'The city cannot annex on its own. But if 75% of the owners in an area, holding 75% of its assessed value, sign a petition, the whole area can be annexed, including owners who did not sign. An area can also be annexed by a voter petition followed by an election.',
+      links: ['scAnnexLaw', 'annex'] },
+    { q: 'Will my schools change?',
+      a: 'No. Greenville County Schools is a single countywide district and attendance zones do not follow city limits.',
+      links: [] },
+    { q: 'Will my zoning change?',
+      a: 'Yes. County zoning is replaced by a city zoning district, normally assigned as part of the annexation, and future building and land-use permits go through the city. Ask the city which district it would propose for your property.',
+      links: ['annex'] },
+    { q: 'Do my car taxes change?',
+      a: 'Yes. Vehicles are taxed at the full millage of the district where they are kept, so the vehicle bill moves with the millage. Enter your vehicles above to see it.',
+      links: ['vehicles'] },
   ];
 
   // Shown under the results. "use" limits a note to certain property types.

@@ -42,6 +42,11 @@
     $('services').innerHTML = D.services.map((s) =>
       '<tr><td>' + esc(s.topic) + '</td><td>' + esc(s.now) + '</td><td>' + esc(s.after) + '</td></tr>').join('');
     $('services-notes').innerHTML = (D.servicesNotes || []).map((n) => '<p class="hint" style="color:var(--muted);font-size:.88rem">' + n + '</p>').join('');
+    $('faq').innerHTML = (D.faq || []).map((f) => {
+      const links = f.links.map((k) => D.sources[k]).filter(Boolean).map((s) =>
+        '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.label) + '</a>').join(' &middot; ');
+      return '<dt>' + esc(f.q) + '</dt><dd>' + esc(f.a) + (links ? '<span class="more">More: ' + links + '</span>' : '') + '</dd>';
+    }).join('');
     $('sources').innerHTML = Object.values(D.sources).map((s) =>
       '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.label) + '</a></li>').join('');
   }
