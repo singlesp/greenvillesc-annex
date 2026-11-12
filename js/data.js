@@ -25,8 +25,15 @@
     salesTax: { label: 'Greenville Journal: city sales tax approved, county referendum fails (Nov 2026)', url: 'https://greenvillejournal.com/government/penny-tax-for-greenville-county-roads-four-cities-approve-measure-but-countys-referendum-fails/' },
     scAnnexLaw: { label: 'SC Code Title 5, Chapter 3 (annexation)', url: 'https://www.scstatehouse.gov/code/t05c003.php' },
     gis: { label: 'Greenville County GIS (parcel and district lookup)', url: 'https://www.gcgis.org/' },
-    reassess: { label: 'Greenville County Real Property Services, countywide reassessment and the 15% cap', url: 'https://www.greenvillecounty.org/realproperty/PDF/Reasssessment.pdf' },
-    scValueLaw: { label: 'SC Code Title 12, Chapter 37, Article 25 (when property is revalued)', url: 'https://www.scstatehouse.gov/code/t12c037.php' },
+    reassess: { label: 'Greenville County Real Property Services (reassessment years, assessment ratios)', url: 'https://www.greenvillecounty.org/realproperty/' },
+    scValueLaw: { label: 'SC Code Title 12, Chapter 37 (homestead exemption, revaluation, 15% cap)', url: 'https://www.scstatehouse.gov/code/t12c037.php' },
+    vehicleFaq: { label: 'Greenville County Auditor, vehicle tax FAQ', url: 'https://www.greenvillecounty.org/Auditor/VehicleFAQ.aspx' },
+    gcsFind: { label: 'Greenville County Schools, Find Your School (assigned schools by address)', url: 'https://fys.greenville.k12.sc.us/' },
+    annexApp: { label: 'City of Greenville annexation application (proposed city zoning, hearing process)', url: 'https://content.civicplus.com/api/assets/d9f9a8a7-a322-4726-a619-f70d1f71dd5a' },
+    parkerPlan: { label: 'Post and Courier: Greenville and Parker District resolve years-long tax dispute (Nov 2026)', url: 'https://www.yahoo.com/news/us/articles/greenville-parker-district-resolve-years-100000685.html' },
+    cityStr: { label: 'City of Greenville short-term rentals (allowed zoning districts, permit, license, accommodations tax)', url: 'https://www.greenvillesc.gov/short-term-rentals' },
+    devCode: { label: 'City of Greenville Development Code (nonconforming uses, Div. 19-6.3)', url: 'https://content.civicplus.com/api/assets/80eb840c-22e9-4c83-bf31-646396fda800' },
+    citySewerCode: { label: 'City of Greenville Code § 6-126, sewage disposal (sewer connection, septic tanks)', url: 'https://library.municode.com/sc/greenville/codes/code_of_ordinances?nodeId=COOR_CH6BUBURE_ARTIVPLCO_S6-126SEDI' },
     fire: { label: 'City of Greenville Fire Department', url: 'https://www.greenvillesc.gov/fire-department-0' },
   };
 
@@ -153,7 +160,7 @@
     ],
   };
 
-  DATA.fireNote = 'Normally the fire district levy ends and the city pays the district directly. State law does let a district keep taxing an annexed area until a transition plan is in place, so confirm with the County Auditor.';
+  DATA.fireNote = 'Normally the fire district levy ends and the city pays the district directly. The Parker District and the city signed a plan that works this way in September 2026. For other districts, state law lets a district keep taxing an annexed area until a transition plan is in place, so confirm with the County Auditor.';
 
   DATA.servicesNotes = [
     'The City of Greenville Fire Department holds the top insurance rating (ISO Class 1). Some neighboring districts are also highly rated, so ask your insurer whether your premium would change.',
@@ -163,26 +170,41 @@
   // Short answers to common assumptions. "links" are keys in SRC.
   DATA.faq = [
     { q: 'Does annexation trigger a reassessment of my property?',
-      a: 'No. The county Assessor sets your value, not the city, and state law only resets it when the property is sold or transferred, when you add improvements, or at the countywide reassessment every five years (last done in 2025, next due in 2030; increases are capped at 15%). Annexation changes the millage applied to your value, not the value.',
+      a: 'No. The county Assessor sets your value, not the city. State law revalues property when it is sold or transferred, when you add improvements, or at the countywide reassessment every five years (last done in 2025, next due in 2030, with increases capped at 15% for most properties). Annexation is not one of those events, and moving from county to city residential zoning does not change a home’s tax class.',
       links: ['reassess', 'scValueLaw'] },
     { q: 'Is the city tax added on top of everything I pay now?',
       a: 'No. City millage is added, but your fire district levy and any Greater Greenville Sanitation or special district levies normally come off. County and school taxes stay the same. The estimate above shows the net effect for your tax district.',
-      links: ['millage'] },
+      links: ['millage', 'scAnnexLaw'] },
+    { q: 'What happens with my fire district, such as Parker?',
+      a: 'The city fire department takes over and your fire district levy normally comes off your tax bill. Parker and the city signed a 30-year plan in September 2026: for each annexed property the city, not the owner, pays Parker one year of the taxes it loses and then smaller payments for seven years, and Parker may still respond to some calls.',
+      links: ['parkerPlan', 'scAnnexLaw', 'fire'] },
     { q: 'Do I keep the 4% owner-occupied rate and the homestead exemption?',
-      a: 'Yes. Both are set by state law and handled by the county, and they apply to city taxes too. Owner-occupied homes also stay exempt from school operating taxes.',
-      links: ['assessorFaq'] },
+      a: 'Yes. Both are set by state law and handled by the county, and state law applies the homestead exemption to city taxes as well as county and school taxes. Owner-occupied homes also stay exempt from school operating taxes.',
+      links: ['assessorFaq', 'scValueLaw'] },
     { q: 'Can my property be annexed if I do not agree?',
-      a: 'The city cannot annex on its own. But if 75% of the owners in an area, holding 75% of its assessed value, sign a petition, the whole area can be annexed, including owners who did not sign. An area can also be annexed by a voter petition followed by an election.',
+      a: 'The city cannot annex on its own. But if 75% of the owners in an area, holding 75% of its assessed value, sign a petition, the whole area can be annexed, including owners who did not sign. An area can also be annexed if 25% of the voters living there sign a petition and a majority then vote yes in an election.',
       links: ['scAnnexLaw', 'annex'] },
+    { q: 'Can an annexation be undone?',
+      a: 'Only in narrow ways. A court challenge needs a notice filed within 60 days and a lawsuit within 90 days after the annexation is declared. After that, removing an area takes a petition signed by a majority of the landowners living in the whole city, followed by a citywide election.',
+      links: ['scAnnexLaw'] },
     { q: 'Will my schools change?',
-      a: 'No. Greenville County Schools is a single countywide district and attendance zones do not follow city limits.',
-      links: [] },
+      a: 'No. Schools are run by Greenville County Schools, not the city, and school district lines do not move with city limits. Your assigned schools come from the district’s attendance zones for your address.',
+      links: ['gcsFind'] },
     { q: 'Will my zoning change?',
-      a: 'Yes. County zoning is replaced by a city zoning district, normally assigned as part of the annexation, and future building and land-use permits go through the city. Ask the city which district it would propose for your property.',
-      links: ['annex'] },
+      a: 'Yes. County zoning stops applying. The annexation application names a proposed city zoning district, which goes through a Planning Commission public hearing and a City Council vote along with the annexation; after that, building and land-use permits go through the city.',
+      links: ['annexApp', 'annex'] },
+    { q: 'What happens to uses that are allowed now but not under city rules?',
+      a: 'City code lets a use or building that met the zoning rules in place when it was established continue as a nonconforming use, as long as it is not expanded and does not stop for 12 months or more. Other city ordinances apply as soon as the annexation takes effect, so check anything specific, such as animals or a home business, with the city.',
+      links: ['devCode'] },
+    { q: 'Can I keep running a short-term rental?',
+      a: 'Not as a new use in a residential district. The city allows rentals of under 30 days only in mixed-use and business districts, with a city permit, business license and 3% accommodations tax; homes in residential districts can only be leased for 30 days or more. City code does not say how its nonconforming-use rule applies to a rental that began under county rules, so get the city’s answer in writing before the annexation is final.',
+      links: ['cityStr', 'devCode'] },
+    { q: 'Will I have to connect to sewer if I am on septic?',
+      a: 'Possibly. City code lets the city require a house to connect when a public sewer main can be reached by extending a line no more than 300 feet, with the owner paying for the connection and any extension. Ask the city how this would apply to your lot.',
+      links: ['citySewerCode'] },
     { q: 'Do my car taxes change?',
-      a: 'Yes. Vehicles are taxed at the full millage of the district where they are kept, so the vehicle bill moves with the millage. Enter your vehicles above to see it.',
-      links: ['vehicles'] },
+      a: 'Yes. Vehicle tax is based on the vehicle’s value and the tax district where you live, using your address on file with SCDMV, so the vehicle bill moves with the millage. Enter your vehicles above to see it.',
+      links: ['vehicles', 'vehicleFaq'] },
   ];
 
   // Shown under the results. "use" limits a note to certain property types.
