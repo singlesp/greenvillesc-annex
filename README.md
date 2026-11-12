@@ -56,6 +56,7 @@ Source "Deploy from a branch", branch `main`, folder `/ (root)`.
 - County stormwater amounts come from the county's billing policy and 2023-24
   tax notices.
 - Private trash hauler prices are a placeholder the visitor should overwrite.
+  Paid curbside recycling defaults to $0; the visitor enters their own cost.
 - Whether Greater Greenville Sanitation charges and small special-district
   levies end exactly at annexation is assumed from how city tax districts
   appear on the Auditor's sheet.

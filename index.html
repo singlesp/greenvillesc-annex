@@ -124,7 +124,7 @@
           </div>
         </div>
 
-        <h3>Trash</h3>
+        <h3>Trash and recycling</h3>
         <div class="grid">
           <div class="field" id="trash-now-field">
             <label for="trash-now">How is your trash handled today?</label>
@@ -140,6 +140,11 @@
           </div>
           <div class="field wide" id="trash-ggs-note" hidden>
             <span class="hint">Your tax district is in the Greater Greenville Sanitation district, so you pay for trash through your tax bill today. That is counted automatically.</span>
+          </div>
+          <div class="field" data-hide="business">
+            <label for="recycling-monthly">Curbside recycling you pay for per month, per household</label>
+            <div class="money"><input type="number" id="recycling-monthly" min="0" step="1" inputmode="decimal" value="0"></div>
+            <span class="hint">Only if you pay for recycling pickup separately from trash. Leave at 0 if you do not, or if it is already in the hauler cost. City service includes curbside recycling.</span>
           </div>
           <div class="field" id="trash-after-field">
             <label for="trash-after">Private hauler cost per month after annexation</label>

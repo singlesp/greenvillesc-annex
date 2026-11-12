@@ -131,6 +131,10 @@
       add(G4, 'Trash collection', nowTrash, 12 * D.trash.cityMonthly * units,
         { note: (inGgs ? 'Today you pay Greater Greenville Sanitation through the millage and annual fee above. ' : '') +
             'After: the city solid waste fee of $' + D.trash.cityMonthly + ' a month per dwelling unit, billed on the water bill.' });
+      if (num(input.recyclingMonthly)) {
+        add(G4, 'Curbside recycling (private service today)', 12 * num(input.recyclingMonthly) * units, 0,
+          { tag: 'your estimate', note: 'Curbside recycling is included in the city solid waste fee.' });
+      }
     } else if (inGgs) {
       // The city does not collect commercial trash, so GGS service is replaced by a private hauler.
       add(G4, 'Trash collection (private hauler after)', 0, 12 * num(input.trashAfterMonthly), { tag: 'your estimate' });
