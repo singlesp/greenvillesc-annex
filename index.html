@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Greenville Annexation Cost Calculator</title>
+  <meta name="description" content="See how your property taxes, fees and utility bills would change if your Greenville County property were annexed into the City of Greenville.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site">
+      <h1>How would annexation into the City of Greenville change your yearly costs?</h1>
+      <p>If your property is in unincorporated Greenville County, joining the city changes more than one line on your tax bill. Some costs go up, some go down, and some stay the same. This calculator adds them all up for your property.</p>
+      <p>It is an independent, unofficial estimate. It is not run by the City of Greenville or Greenville County. The address or parcel number you search for is sent to Greenville County&rsquo;s public GIS service to find the record; everything else you enter stays in your browser.</p>
+    </header>
+
+    <section class="card" id="step-find">
+      <h2><span class="step">1</span>Find your property</h2>
+      <p class="lede">Enter a street address or the parcel number (PIN / tax map number) from your tax bill. Or skip this and enter the details yourself.</p>
+      <form id="search-form" class="search-row" autocomplete="off">
+        <input type="search" id="search" aria-label="Street address or parcel number" placeholder="e.g. 301 Edwards Mill Rd, or 0101010104500" list="suggestions">
+        <datalist id="suggestions"></datalist>
+        <button type="submit" id="search-btn">Look up</button>
+      </form>
+      <p class="status" id="search-status" role="status" aria-live="polite"></p>
+      <ul class="results-list" id="search-results" hidden></ul>
+      <div class="parcel-summary" id="parcel-summary" hidden></div>
+      <div class="notice" id="parcel-notice" role="alert" hidden></div>
+    </section>
+
+    <form id="inputs" novalidate>
+      <section class="card">
+        <h2><span class="step">2</span>About the property</h2>
+        <p class="lede">These come from the county record when the lookup works. Check them against your tax bill and correct anything that is off.</p>
+
+        <div class="field wide">
+          <span class="label" id="use-label">How is the property used?</span>
+          <div class="segmented" role="radiogroup" aria-labelledby="use-label">
+            <label><input type="radio" name="use" value="owner" checked>I live here (4% legal residence)</label>
+            <label><input type="radio" name="use" value="rental">Rental or second home (6%)</label>
+            <label><input type="radio" name="use" value="business">Business / commercial (6%)</label>
+          </div>
+          <span class="hint">The county record does not say which rate you get. Your tax bill shows 4% or 6%.</span>
+        </div>
+
+        <div class="grid" style="margin-top:14px">
+          <div class="field">
+            <label for="value">Taxable market value</label>
+            <div class="money"><input type="number" id="value" min="0" step="1000" inputmode="numeric" value="300000"></div>
+            <span class="hint">The county&rsquo;s capped &ldquo;taxable market value,&rdquo; not what the home would sell for.</span>
+          </div>
+          <div class="field">
+            <label for="dist">Tax district</label>
+            <select id="dist"></select>
+            <span class="hint">Three-digit district number on your tax bill.</span>
+          </div>
+          <div class="field" data-show="owner rental">
+            <label for="units">Dwelling units</label>
+            <input type="number" id="units" min="1" max="3" step="1" inputmode="numeric" value="1">
+            <span class="hint">1 for a house, 2 for a duplex, 3 for a triplex. For four or more units, choose Business.</span>
+          </div>
+          <div class="field" data-show="owner">
+            <span class="label">Exemptions</span>
+            <label class="check"><input type="checkbox" id="homestead">Homestead exemption (age 65+, disabled or legally blind)</label>
+          </div>
+        </div>
+
+        <div class="grid" style="margin-top:14px">
+          <div class="field">
+            <label for="vehicles">Total value of vehicles kept here</label>
+            <div class="money"><input type="number" id="vehicles" min="0" step="500" inputmode="numeric" value="0"></div>
+            <span class="hint">Add up the values shown on your vehicle tax notices. Leave 0 to skip.</span>
+          </div>
+          <div class="field" data-show="business">
+            <label for="bpp">Business personal property value</label>
+            <div class="money"><input type="number" id="bpp" min="0" step="1000" inputmode="numeric" value="0"></div>
+            <span class="hint">Depreciated value of equipment, furniture and fixtures from your PT-100.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2><span class="step">3</span>Your bills</h2>
+        <p class="lede">Rough numbers are fine. Everything has a sensible default.</p>
+
+        <h3>Water and sewer</h3>
+        <div class="grid">
+          <div class="field">
+            <label for="water-provider">Water provider</label>
+            <select id="water-provider">
+              <option value="gw">Greenville Water</option>
+              <option value="other">Well or another provider</option>
+            </select>
+          </div>
+          <div class="field" data-water>
+            <label for="meter">Meter size</label>
+            <select id="meter"></select>
+          </div>
+          <div class="field" data-water="gw">
+            <label for="water-mode">What do you know?</label>
+            <select id="water-mode">
+              <option value="gal">Monthly usage in gallons</option>
+              <option value="bill">Monthly water charge in dollars</option>
+            </select>
+          </div>
+          <div class="field" data-water data-mode="gal">
+            <label for="gallons">Water used per month (gallons)</label>
+            <input type="number" id="gallons" min="0" step="500" inputmode="numeric" value="5000">
+            <span class="hint">Printed on your water bill. A typical household uses 4,000 to 6,000. Sewer charges are based on it too.</span>
+          </div>
+          <div class="field" data-water data-mode="bill" hidden>
+            <label for="water-bill">Water charge per month</label>
+            <div class="money"><input type="number" id="water-bill" min="0" step="1" inputmode="decimal" value="21.63"></div>
+            <span class="hint">Just the water lines of the bill, not sewer or trash.</span>
+          </div>
+          <div class="field">
+            <label for="sewer">Sewer</label>
+            <select id="sewer">
+              <option value="metro">Public sewer (MetroConnects / ReWa)</option>
+              <option value="septic">Septic tank</option>
+              <option value="other">Other / not sure</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Trash</h3>
+        <div class="grid">
+          <div class="field" id="trash-now-field">
+            <label for="trash-now">How is your trash handled today?</label>
+            <select id="trash-now">
+              <option value="private">I pay a private hauler</option>
+              <option value="self">I haul it myself / no cost</option>
+            </select>
+          </div>
+          <div class="field" id="trash-monthly-field">
+            <label for="trash-monthly">Hauler cost per month, per household</label>
+            <div class="money"><input type="number" id="trash-monthly" min="0" step="1" inputmode="decimal" value="28"></div>
+            <span class="hint">Use your own bill; local haulers run roughly $22 to $35.</span>
+          </div>
+          <div class="field wide" id="trash-ggs-note" hidden>
+            <span class="hint">Your tax district is in the Greater Greenville Sanitation district, so you pay for trash through your tax bill today. That is counted automatically.</span>
+          </div>
+          <div class="field" id="trash-after-field">
+            <label for="trash-after">Private hauler cost per month after annexation</label>
+            <div class="money"><input type="number" id="trash-after" min="0" step="1" inputmode="decimal" value="0"></div>
+            <span class="hint">The city does not collect commercial trash, so you would replace Greater Greenville Sanitation with a private hauler.</span>
+          </div>
+        </div>
+
+        <h3>Stormwater</h3>
+        <div class="grid">
+          <div class="field" data-hide="business">
+            <span class="label">Home size</span>
+            <label class="check"><input type="checkbox" id="storm-county-large" checked>The first floor has more than 1,000 sq ft of heated space (sets the county fee)</label>
+            <label class="check"><input type="checkbox" id="storm-city-large" checked>The lot has more than 1,640 sq ft of roof, driveway and other hard surface (sets the city fee; true for most houses)</label>
+          </div>
+          <div class="field" data-show="business">
+            <label for="impervious">Impervious area (sq ft)</label>
+            <input type="number" id="impervious" min="0" step="100" inputmode="numeric" value="5000">
+            <span class="hint">Roofs, paving and other hard surfaces. Both fees are charged per block of roughly 2,400 sq ft.</span>
+          </div>
+        </div>
+
+        <h3>Other</h3>
+        <div class="grid">
+          <div class="field" data-need="electric">
+            <label for="electric">Duke Energy electric bill per month</label>
+            <div class="money"><input type="number" id="electric" min="0" step="1" inputmode="decimal" value="0"></div>
+            <span class="hint">Average over the year. Enter 0 if your power is not from Duke.</span>
+          </div>
+          <div class="field" data-need="gas">
+            <label for="gas">Natural gas bill per month</label>
+            <div class="money"><input type="number" id="gas" min="0" step="1" inputmode="decimal" value="0"></div>
+          </div>
+          <div class="field" data-need="insurance">
+            <label for="insurance">Home and auto insurance per year</label>
+            <div class="money"><input type="number" id="insurance" min="0" step="50" inputmode="decimal" value="0"></div>
+          </div>
+          <div class="field">
+            <label for="delivered">Taxable purchases delivered here per year</label>
+            <div class="money"><input type="number" id="delivered" min="0" step="100" inputmode="decimal" value="3000"></div>
+            <span class="hint">Online orders and deliveries. Used for the city&rsquo;s new 1% sales tax. Groceries, prescriptions and gas are exempt.</span>
+          </div>
+          <div class="field" data-show="rental">
+            <label for="rent">Rent collected per year</label>
+            <div class="money"><input type="number" id="rent" min="0" step="500" inputmode="numeric" placeholder="Enter to check the license"></div>
+            <span class="hint">The city requires a business license for rentals earning $5,000 or more a year.</span>
+          </div>
+          <div class="field" data-show="business">
+            <label for="gross">Annual gross income of the business</label>
+            <div class="money"><input type="number" id="gross" min="0" step="1000" inputmode="numeric" placeholder="Enter to include the license tax"></div>
+          </div>
+          <div class="field" data-show="business">
+            <label for="biz-class">Type of business</label>
+            <select id="biz-class"></select>
+          </div>
+        </div>
+
+        <details>
+          <summary>Advanced assumptions</summary>
+          <label class="check" style="margin-top:8px"><input type="checkbox" id="keep-fire">Assume my fire district keeps taxing the property after annexation</label>
+          <p class="hint" id="keep-fire-hint" style="color:var(--muted);font-size:.85rem;margin:4px 0 0 24px"></p>
+          <label class="check" style="margin-top:8px" data-show="owner"><input type="checkbox" id="skip-credit">Leave out the estimated city sales-tax credit for owner-occupied homes</label>
+        </details>
+      </section>
+    </form>
+
+    <section class="card" id="results">
+      <h2><span class="step">4</span>Your estimate</h2>
+      <p class="lede" id="results-lede"></p>
+      <p class="sr-only" id="results-announce" role="status" aria-atomic="true"></p>
+      <div class="notice" id="results-block" hidden></div>
+      <div id="results-body">
+      <div class="headline" id="headline"></div>
+      <div class="table-scroll">
+        <table class="breakdown">
+          <thead><tr><th>Per year</th><th>Now</th><th>After</th><th>Change</th></tr></thead>
+          <tbody id="breakdown"></tbody>
+        </table>
+      </div>
+      <div id="caveats"></div>
+      </div>
+      <p style="margin-top:14px"><button type="button" class="secondary" onclick="window.print()">Print or save as PDF</button></p>
+    </section>
+
+    <section class="card">
+      <h2>How services would change</h2>
+      <p class="lede">These are the services that change provider on annexation.</p>
+      <div class="table-scroll">
+        <table class="services">
+          <thead><tr><th>Service</th><th>Unincorporated county (now)</th><th>City of Greenville (after)</th></tr></thead>
+          <tbody id="services"></tbody>
+        </table>
+      </div>
+      <div id="services-notes"></div>
+    </section>
+
+    <section class="card">
+      <h2>How this is calculated</h2>
+      <div id="method"></div>
+      <h3>Sources</h3>
+      <ul class="sources" id="sources"></ul>
+    </section>
+
+    <footer class="site">
+      <p>Unofficial estimate for general information, not tax, legal or financial advice. Rates as of <span id="as-of"></span>. Confirm figures with the Greenville County Auditor, the City of Greenville and your utility providers before making decisions.</p>
+    </footer>
+  </div>
+
+  <script src="js/millage-snapshot.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/calc.js"></script>
+  <script src="js/lookup.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
